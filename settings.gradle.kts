@@ -22,3 +22,4 @@ dependencyResolutionManagement {
 rootProject.name = "ExcellentAndroid"
 include(":app")
 include(":ExcellentMvvm")
+include(":common")
