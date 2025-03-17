@@ -4,11 +4,11 @@ plugins {
 }
 
 android {
-    namespace = "com.it.excellentmvvm"
+    namespace = "com.it.excellent.architecture"
     compileSdk = 35
 
     defaultConfig {
-        minSdk = 28
+        minSdk = 24
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
@@ -37,4 +37,31 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+
+    // 常用基础组件.
+    api(libs.androidx.appcompat.v161)
+    api(libs.annotations)
+    api(libs.androidx.navigation.runtime)
+    api(libs.material.v190)
+    api(libs.androidx.constraintlayout)
+    api(libs.androidx.recyclerview)
+
+    // 常用架构组件，已按功能提取分割为多个独立库。 可按需选配.
+    api(libs.mvi.dispatcher)
+    api(libs.unpeek.livedata)
+    api(libs.smooth.navigation)
+    api(libs.binding.state)
+    api(libs.strict.databinding)
+    api(libs.binding.recyclerview)
+
+    // 常用数据、媒体组件.
+    api(libs.glide)
+
+    api(libs.gson)
+    api(libs.retrofit)
+    api(libs.converter.gson)
+    api(libs.logging.interceptor)
+    api(libs.okhttp)
+    api(libs.rxandroid)
+    api(libs.rxjava)
 }
