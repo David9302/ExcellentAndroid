@@ -31,14 +31,16 @@ smoothNavigation = "v4.0.0"
 unpeekLivedata = "7.8.0"
 
 [libraries]
+#noinspection SimilarGradleDependency
 androidx-appcompat-v161 = { module = "androidx.appcompat:appcompat", version.ref = "appcompatVersion" }
 androidx-constraintlayout = { module = "androidx.constraintlayout:constraintlayout", version.ref = "constraintlayout" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-navigation-runtime = { module = "androidx.navigation:navigation-runtime", version.ref = "navigationRuntime" }
 androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version.ref = "recyclerview" }
 annotations = { module = "org.jetbrains:annotations", version.ref = "annotations" }
-binding_recyclerview = { module = "com.github.KunMinX.Strict-DataBinding:binding_recyclerview", version.ref = "binding_state" }
-binding_state = { module = "com.github.KunMinX.Strict-DataBinding:binding_state", version.ref = "binding_state" }
+binding-recyclerview = { group = "com.github.KunMinX.Strict-DataBinding", name = "binding_recyclerview", version.ref = "binding_state" }
+binding-state = { group = "com.github.KunMinX.Strict-DataBinding", name = "binding_state", version.ref = "binding_state"}
+strict-databinding = { group = "com.github.KunMinX.Strict-DataBinding", name = "strict_databinding", version.ref = "binding_state"}
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
@@ -68,7 +70,6 @@ retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit
 rxandroid = { module = "io.reactivex.rxjava2:rxandroid", version.ref = "rxandroid" }
 rxjava = { module = "io.reactivex.rxjava2:rxjava", version.ref = "rxjava" }
 smooth-navigation = { module = "com.github.KunMinX:Smooth-Navigation", version.ref = "smoothNavigation" }
-strict_databinding = { module = "com.github.KunMinX.Strict-DataBinding:strict_databinding", version.ref = "binding_state" }
 unpeek-livedata = { module = "com.github.KunMinX:UnPeek-LiveData", version.ref = "unpeekLivedata" }
 
 [plugins]
