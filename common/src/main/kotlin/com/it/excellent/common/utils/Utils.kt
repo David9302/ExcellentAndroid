@@ -5,9 +5,11 @@ import android.app.Activity
 import android.app.Application
 import android.content.Context
 import android.os.Bundle
+import android.view.View
 import android.view.inputmethod.InputMethodManager
 import java.util.LinkedList
 
+@SuppressLint("PrivateApi")
 object Utils {
 
     private const val PERMISSION_ACTIVITY_CLASS_NAME = "com.blankj.utilcode.util.PermissionUtils\$PermissionActivity"
@@ -119,12 +121,23 @@ object Utils {
 
             val leakViews = arrayOf("mLastSrvView", "mCurRootView", "mServedView", "mNextServedView")
             for (leakView in leakViews) {
-                val leakViewField = InputMethodManager::class.java.getDeclaredField(leakView)
-                if (leakViewField == null) {
-                    continue
-                }
-
-
+                try {
+                    val leakViewField = InputMethodManager::class.java.getDeclaredField(leakView)
+                    if (leakViewField == null) {
+                        continue
+                    }
+                    if (!leakViewField.isAccessible) {
+                        leakViewField.isAccessible = true
+                    }
+                    val obj = leakViewField.get(imm)
+                    if (obj !is View) {
+                        continue
+                    }
+                    val view = obj as View
+                    if (view.rootView == activity.window.decorView.rootView) {
+                        leakViewField.set(imm, null)
+                    }
+                } catch (e: Throwable) {e.printStackTrace()}
             }
         }
 
@@ -140,15 +153,26 @@ object Utils {
         }
 
         override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
-            TODO("Not yet implemented")
+            setTopActivity(activity)
         }
 
         override fun onActivityStarted(activity: Activity) {
-            TODO("Not yet implemented")
+            if (!mIsBackground) {
+                setTopActivity(activity)
+            }
+            if (mConfigCount < 0) {
+                ++mConfigCount
+            } else {
+                ++mForegroundCount
+            }
         }
 
         override fun onActivityResumed(activity: Activity) {
-            TODO("Not yet implemented")
+            setTopActivity(activity)
+            if (mIsBackground) {
+                mIsBackground = false
+                postStatus(true)
+            }
         }
 
         override fun onActivityPaused(activity: Activity) {
@@ -156,15 +180,83 @@ object Utils {
         }
 
         override fun onActivityStopped(activity: Activity) {
-            TODO("Not yet implemented")
+            if (activity.isChangingConfigurations) {
+                --mConfigCount
+            } else {
+                --mForegroundCount
+                if (mForegroundCount <= 0) {
+                    mIsBackground = true
+                    postStatus(false)
+                }
+            }
         }
 
-        override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {
-            TODO("Not yet implemented")
-        }
+        override fun onActivitySaveInstanceState(activity: Activity, outState: Bundle) {}
 
         override fun onActivityDestroyed(activity: Activity) {
-            TODO("Not yet implemented")
+            mActivityList.remove(activity)
+            consumeOnActivityDestroyedListener(activity)
+            fixSoftInputLeaks(activity)
+        }
+
+        private fun postStatus(isForeground: Boolean) {
+            if (mStatusListenerMap.isEmpty()) {
+                return
+            }
+
+            for (onAppStatusChangedListener in mStatusListenerMap.values) {
+                if (onAppStatusChangedListener == null) {
+                    return
+                }
+
+                if (isForeground) {
+                    onAppStatusChangedListener.onForeground()
+                } else {
+                    onAppStatusChangedListener.onBackground()
+                }
+            }
+        }
+
+        private fun consumeOnActivityDestroyedListener(activity: Activity) {
+            val iterator = mDestroyedListenerMap.entries.iterator()
+            while (iterator.hasNext()) {
+                val entry = iterator.next()
+                if (entry.key == activity) {
+                    val value = entry.value
+                    for (listener in value) {
+                        listener.onActivityDestroyed(activity)
+                    }
+                    iterator.remove()
+                }
+            }
+        }
+
+        @SuppressLint("PrivateApi")
+        private fun getTopActivityByReflect(): Activity? {
+            try {
+                val activityThreadClazz = Class.forName("android.app.ActivityThread")
+                val currentActivityThreadMethod = activityThreadClazz.getMethod("currentActivityThread").invoke(null)
+                val mActivityListField = activityThreadClazz.getDeclaredField("mActivityList")
+                mActivityListField.isAccessible = true
+                val activities = mActivityListField.get(currentActivityThreadMethod) as Map
+                if (activities == null) {
+                    return null
+                }
+
+                for (activityRecord in activities.values) {
+                    val activityRecordClazz = activityRecord!!.javaClass
+                    val pausedField = activityRecordClazz.getDeclaredField("paused")
+                    pausedField.isAccessible = true
+                    if (!pausedField.getBoolean(activityRecord)) {
+                        val activityField = activityRecordClazz.getDeclaredField("activity")
+                        activityField.isAccessible = true
+                        return activityField.get(activityRecord) as Activity
+                    }
+                }
+            } catch (e: ClassNotFoundException) {
+                e.printStackTrace()
+            }
+            return null
         }
 
     }
