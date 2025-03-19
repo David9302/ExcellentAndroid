@@ -4,20 +4,38 @@ import android.content.res.Resources
 import android.util.DisplayMetrics
 import android.util.Log
 import java.lang.reflect.Field
+import java.util.UUID
 
 object AdaptScreenUtils {
 
     private var isInitMiui = false
-    private var mTmpMeticsField:Field? = null
+    private var mTmpMetricsField:Field? = null
 
-    fun adaptHeight(resources: Resources, designHeight: Int): Resources {
+    @JvmStatic
+    fun adaptWidth(resources: Resources, designWidth: Int): Resources {
         val dm = getDisplayMetrics(resources)
-        val newXdpi = (dm?.widthPixels?.times(72f))?.div(designHeight)
-
+        val newXdpi = (dm.widthPixels.times(72f)).div(designWidth)
+        dm.xdpi = newXdpi
+        setAppDmXdpi(newXdpi)
+        return resources
     }
 
     @JvmStatic
-    fun getDisplayMetrics(resources: Resources): DisplayMetrics? {
+    fun adaptHeight(resources: Resources, designHeight: Int): Resources {
+        val dm = getDisplayMetrics(resources)
+        val newXdpi = (dm.widthPixels.times(72f)).div(designHeight)
+        dm.xdpi = newXdpi
+        setAppDmXdpi(newXdpi)
+        return resources
+    }
+
+    @JvmStatic
+    private fun setAppDmXdpi(xdpi: Float) {
+        Utils.getApp().resources.displayMetrics.xdpi = xdpi
+    }
+
+    @JvmStatic
+    fun getDisplayMetrics(resources: Resources): DisplayMetrics {
         val miuiDisplayMetrics = getMiuiTmpMetrics(resources) ?: return resources.displayMetrics
         return miuiDisplayMetrics
     }
@@ -29,9 +47,9 @@ object AdaptScreenUtils {
             val simpleName = resources.javaClass.simpleName
             if ("MiuiResources" == simpleName || "XResources" == simpleName) {
                 try {
-                    mTmpMeticsField = Resources::class.java.getDeclaredField("mTmpMetrics")
-                    mTmpMeticsField!!.isAccessible = true
-                    ret = mTmpMeticsField!!.get(resources) as DisplayMetrics
+                    mTmpMetricsField = Resources::class.java.getDeclaredField("mTmpMetrics")
+                    mTmpMetricsField!!.isAccessible = true
+                    ret = mTmpMetricsField!!.get(resources) as DisplayMetrics
                 } catch (e: Exception) {
                     Log.e("AdaptScreenUtils", "no field of mTmpMetrics in resources")
                 }
@@ -40,12 +58,12 @@ object AdaptScreenUtils {
             return ret
         }
 
-        if (mTmpMeticsField == null) {
+        if (mTmpMetricsField == null) {
             return null
         }
 
         try {
-            return mTmpMeticsField?.get(resources) as DisplayMetrics
+            return mTmpMetricsField?.get(resources) as DisplayMetrics
         } catch (e: Exception) {
             return null
         }
