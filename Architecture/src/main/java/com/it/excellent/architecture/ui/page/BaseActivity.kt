@@ -35,6 +35,9 @@ public abstract class BaseActivity : DataBindingActivity() {
         // 如这么说无体会，详见 https://xiaozhuanlan.com/topic/9816742350 和 https://xiaozhuanlan.com/topic/2356748910
     }
 
+    /**
+     * tip 2： Jetpack 通过工厂模式 实现 ViewModel 作用于可控
+     */
     protected fun <T : ViewModel> getActivityScopeViewModel(modelCLass: Class<T>): T {
         return mViewModelScope.getActivityScopeViewModel(this, modelCLass)
     }
