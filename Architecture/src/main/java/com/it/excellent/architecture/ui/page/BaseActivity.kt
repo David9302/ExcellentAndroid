@@ -15,7 +15,7 @@ import com.it.excellent.common.utils.ScreenUtils
 import com.kunminx.architecture.ui.page.DataBindingActivity
 import com.kunminx.architecture.ui.scope.ViewModelScope
 
-public abstract class BaseActivity : DataBindingActivity() {
+abstract class BaseActivity : DataBindingActivity() {
 
     companion object {
         private val mViewModelScope: ViewModelScope = ViewModelScope()

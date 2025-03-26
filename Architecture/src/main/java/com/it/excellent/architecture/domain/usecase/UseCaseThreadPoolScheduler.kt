@@ -23,9 +23,8 @@ class UseCaseThreadPoolScheduler : UseCaseScheduler {
             TimeUnit.SECONDS, LinkedBlockingQueue())
     }
 
-
     override fun <V : UseCase.ResponseValue> onError(useCaseCallback: UseCase.UseCaseCallback<V>) {
-
+        mHandler.post(useCaseCallback::onError)
     }
 
     override fun execute(runnable: Runnable) {

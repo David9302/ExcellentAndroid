@@ -29,6 +29,7 @@ rxandroid = "2.1.1"
 rxjava = "2.2.21"
 smoothNavigation = "v4.0.0"
 unpeekLivedata = "7.8.0"
+jetpack-muscPlayer = "5.2.0"
 
 [libraries]
 #noinspection SimilarGradleDependency
@@ -71,6 +72,7 @@ rxandroid = { module = "io.reactivex.rxjava2:rxandroid", version.ref = "rxandroi
 rxjava = { module = "io.reactivex.rxjava2:rxjava", version.ref = "rxjava" }
 smooth-navigation = { module = "com.github.KunMinX:Smooth-Navigation", version.ref = "smoothNavigation" }
 unpeek-livedata = { module = "com.github.KunMinX:UnPeek-LiveData", version.ref = "unpeekLivedata" }
+jetpack-musicPlayer = {group = "com.github.KunMinX", name = "Jetpack-MusicPlayer", version.ref = "jetpack-muscPlayer"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

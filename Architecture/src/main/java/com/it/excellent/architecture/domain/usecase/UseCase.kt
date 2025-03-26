@@ -1,8 +1,8 @@
 package com.it.excellent.architecture.domain.usecase
 
 abstract class UseCase <Q : UseCase.RequestValues, P : UseCase.ResponseValue>(
-    private var mRequestValues: Q,
-    private var mUseCaseCallback: UseCaseCallback<P>
+    var mRequestValues: Q,
+    var mUseCaseCallback: UseCaseCallback<P>
 ) {
 
     fun getRequestValues(): Q {

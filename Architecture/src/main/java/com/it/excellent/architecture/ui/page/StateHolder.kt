@@ -2,7 +2,7 @@ package com.it.excellent.architecture.ui.page
 
 import androidx.lifecycle.ViewModel
 
-class StateHolder : ViewModel() {
+open class StateHolder : ViewModel() {
 
     //TODO tip 6：每个页面都需单独准备一个 state-ViewModel，托管与 "控件属性" 发生绑定的 State，
     // 此外，state-ViewModel 职责仅限于状态托管和保存恢复，不建议在此处理 UI 逻辑，

@@ -11,37 +11,38 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.it.excellent.architecture.ui.page.BaseActivity
+import com.it.excellent.architecture.ui.page.StateHolder
 import com.it.excellent.ui.theme.ExcellentAndroidTheme
+import com.kunminx.architecture.ui.page.DataBindingConfig
+import com.kunminx.architecture.ui.state.State
 
-class MainActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
-        setContent {
-            ExcellentAndroidTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
-            }
-        }
+class MainActivity : BaseActivity() {
+
+    private var mStates: MainActivityStates? = null
+//    private val mMessager: PageMes
+    private var mIsListened = false
+
+    override fun initViewModel() {
+        mStates = getActivityScopeViewModel(MainActivityStates::class.java)
+
     }
-}
 
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+    override fun getDataBindingConfig(): DataBindingConfig {
+        TODO("Not yet implemented")
+    }
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    ExcellentAndroidTheme {
-        Greeting("Android")
+    override fun onWindowFocusChanged(hasFocus: Boolean) {
+        super.onWindowFocusChanged(hasFocus)
+    }
+
+    /**
+     *
+     */
+    class MainActivityStates : StateHolder() {
+
+        val isDrawerOpened:State<Boolean> = State<Boolean>(false)
+        val openDrawer: State<Boolean> = State<Boolean>(false)
+        val allowDrawerOpen: State<Boolean> = State<Boolean>(false)
     }
 }
