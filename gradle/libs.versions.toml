@@ -30,6 +30,7 @@ rxjava = "2.2.21"
 smoothNavigation = "v4.0.0"
 unpeekLivedata = "7.8.0"
 jetpack-muscPlayer = "5.2.0"
+keyvalue = "3.7.0-beta"
 
 [libraries]
 #noinspection SimilarGradleDependency
@@ -41,6 +42,7 @@ androidx-recyclerview = { module = "androidx.recyclerview:recyclerview", version
 annotations = { module = "org.jetbrains:annotations", version.ref = "annotations" }
 binding-recyclerview = { group = "com.github.KunMinX.Strict-DataBinding", name = "binding_recyclerview", version.ref = "binding_state" }
 binding-state = { group = "com.github.KunMinX.Strict-DataBinding", name = "binding_state", version.ref = "binding_state"}
+keyvalue-compiler = { module = "com.github.KunMinX.KeyValueX:keyvalue-compiler", version.ref = "keyvalue" }
 strict-databinding = { group = "com.github.KunMinX.Strict-DataBinding", name = "strict_databinding", version.ref = "binding_state"}
 converter-gson = { module = "com.squareup.retrofit2:converter-gson", version.ref = "converterGson" }
 glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
@@ -73,6 +75,7 @@ rxjava = { module = "io.reactivex.rxjava2:rxjava", version.ref = "rxjava" }
 smooth-navigation = { module = "com.github.KunMinX:Smooth-Navigation", version.ref = "smoothNavigation" }
 unpeek-livedata = { module = "com.github.KunMinX:UnPeek-LiveData", version.ref = "unpeekLivedata" }
 jetpack-musicPlayer = {group = "com.github.KunMinX", name = "Jetpack-MusicPlayer", version.ref = "jetpack-muscPlayer"}
+keyvalue = {group = "com.github.KunMinX.KeyValueX", name = "keyvalue", version.ref = "keyvalue"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

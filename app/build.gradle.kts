@@ -41,6 +41,7 @@ android {
 }
 
 dependencies {
+//    implementation()
     implementation(project(":Architecture"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -50,6 +51,8 @@ dependencies {
     implementation(libs.androidx.ui.graphics)
     implementation(libs.androidx.ui.tooling.preview)
     implementation(libs.androidx.material3)
-
+    implementation(libs.keyvalue)
     implementation(libs.jetpack.musicPlayer)
+
+    annotationProcessor(libs.keyvalue.compiler)
 }

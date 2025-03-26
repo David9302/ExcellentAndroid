@@ -22,7 +22,7 @@ object AsyncTask {
             .observeOn(AndroidSchedulers.mainThread())
     }
 
-    interface Action<T> {
+    fun interface Action<T> {
 
         fun onEmit(emitter: ObservableEmitter<T>)
     }
