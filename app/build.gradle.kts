@@ -41,7 +41,7 @@ android {
 }
 
 dependencies {
-//    implementation()
+    implementation(fileTree(mapOf("dir" to "libs", "include" to arrayOf("*.jar", "*.aar"))))
     implementation(project(":Architecture"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

@@ -1,7 +1,9 @@
 package com.it.excellent.domain.proxy
 
 import android.content.Context
+import android.content.Intent
 import androidx.lifecycle.LiveData
+import com.danikula.videocache.HttpProxyCacheServer
 import com.it.excellent.data.bean.TestAlbum
 import com.kunminx.player.contract.ICacheProxy
 import com.kunminx.player.contract.IPlayController
@@ -59,7 +61,21 @@ class PlayerManager private constructor() : IPlayController<TestAlbum, TestAlbum
     ) {
         val appContext = context!!.applicationContext
 
-//        val proxy = HttpP
+        val proxy = HttpProxyCacheServer.Builder(appContext)
+            .fileNameGenerator{ url ->
+                val splitUrl = url.split("/")
+                splitUrl[splitUrl.size - 1]
+            }.maxCacheSize(2147483648L)
+            .build()
+//        mController.init(context1, startOrStop -> {
+//            Intent intent = new Intent(context1, PlayerService.class);
+//            if (startOrStop) context1.startService(intent);
+//            else context1.stopService(intent);
+//        }, proxy::getProxyUrl);
+        mController.init(appContext, { startOrStop ->
+            val intent = Intent(appContext, )
+
+        }, proxy::getProxyUrl)
     }
 
     override fun playAudio() {

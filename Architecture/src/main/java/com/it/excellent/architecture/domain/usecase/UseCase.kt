@@ -1,11 +1,11 @@
 package com.it.excellent.architecture.domain.usecase
 
 abstract class UseCase <Q : UseCase.RequestValues, P : UseCase.ResponseValue>(
-    var mRequestValues: Q,
-    var mUseCaseCallback: UseCaseCallback<P>
+    var mRequestValues: Q? = null,
+    var mUseCaseCallback: UseCaseCallback<P>? = null
 ) {
 
-    fun getRequestValues(): Q {
+    fun getRequestValues(): Q? {
         return mRequestValues
     }
 
@@ -13,7 +13,7 @@ abstract class UseCase <Q : UseCase.RequestValues, P : UseCase.ResponseValue>(
         mRequestValues = requestValues
     }
 
-    fun getUseCaseCallback(): UseCaseCallback<P> {
+    fun getUseCaseCallback(): UseCaseCallback<P>? {
         return mUseCaseCallback
     }
 
@@ -25,7 +25,7 @@ abstract class UseCase <Q : UseCase.RequestValues, P : UseCase.ResponseValue>(
         executeUseCase(mRequestValues)
     }
 
-    protected abstract fun executeUseCase(requestValues: Q)
+    protected abstract fun executeUseCase(requestValues: Q?)
 
 
     interface RequestValues {}
