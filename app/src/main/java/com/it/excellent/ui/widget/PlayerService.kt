@@ -43,93 +43,11 @@ class PlayerService : Service() {
             var expandedView: RemoteViews? = RemoteViews(applicationContext.packageName, R.layout.notify_player_big)
 
             val intent = Intent(applicationContext, MainActivity::class.java)
-            MainActivity::javaClass
-
-
+            intent.action = "showPlayer"
 
         } catch (e: Exception) {
 
         }
-//        try {
-//            String title = testMusic.title;
-//            TestAlbum album = PlayerManager.getInstance().getAlbum();
-//            String summary = album.summary;
-//
-//            RemoteViews simpleContentView = new RemoteViews(
-//                getApplicationContext().getPackageName(), R.layout.notify_player_small);
-//
-//            RemoteViews expandedView;
-//            expandedView = new RemoteViews(
-//                    getApplicationContext().getPackageName(), R.layout.notify_player_big);
-//
-//            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//            intent.setAction("showPlayer");
-//
-//            PendingIntent contentIntent = PendingIntent.getActivity(this, 0, intent,
-//            Build.VERSION.SDK_INT >= Build.VERSION_CODES.S ? PendingIntent.FLAG_MUTABLE : 0);
-//
-//            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-//                NotificationManager notificationManager = (NotificationManager)
-//                getSystemService(Context.NOTIFICATION_SERVICE);
-//
-//                NotificationChannelGroup playGroup = new NotificationChannelGroup(GROUP_ID, getString(R.string.play));
-//                notificationManager.createNotificationChannelGroup(playGroup);
-//
-//                NotificationChannel playChannel = new NotificationChannel(CHANNEL_ID,
-//                    getString(R.string.notify_of_play), NotificationManager.IMPORTANCE_DEFAULT);
-//                playChannel.setGroup(GROUP_ID);
-//                notificationManager.createNotificationChannel(playChannel);
-//            }
-//
-//            Notification notification = new NotificationCompat.Builder(
-//                getApplicationContext(), CHANNEL_ID)
-//                .setSmallIcon(R.drawable.ic_player)
-//                .setContentIntent(contentIntent)
-//                .setOnlyAlertOnce(true)
-//                .setContentTitle(title).build();
-//
-//            notification.contentView = simpleContentView;
-//            notification.bigContentView = expandedView;
-//
-//            setListeners(simpleContentView);
-//            setListeners(expandedView);
-//
-//            notification.contentView.setViewVisibility(R.id.player_progress_bar, View.GONE);
-//            notification.contentView.setViewVisibility(R.id.player_next, View.VISIBLE);
-//            notification.contentView.setViewVisibility(R.id.player_previous, View.VISIBLE);
-//            notification.bigContentView.setViewVisibility(R.id.player_next, View.VISIBLE);
-//            notification.bigContentView.setViewVisibility(R.id.player_previous, View.VISIBLE);
-//            notification.bigContentView.setViewVisibility(R.id.player_progress_bar, View.GONE);
-//
-//            boolean isPaused = PlayerManager.getInstance().isPaused();
-//            notification.contentView.setViewVisibility(R.id.player_pause, isPaused ? View.GONE : View.VISIBLE);
-//            notification.contentView.setViewVisibility(R.id.player_play, isPaused ? View.VISIBLE : View.GONE);
-//            notification.bigContentView.setViewVisibility(R.id.player_pause, isPaused ? View.GONE : View.VISIBLE);
-//            notification.bigContentView.setViewVisibility(R.id.player_play, isPaused ? View.VISIBLE : View.GONE);
-//
-//            notification.contentView.setTextViewText(R.id.player_song_name, title);
-//            notification.contentView.setTextViewText(R.id.player_author_name, summary);
-//            notification.bigContentView.setTextViewText(R.id.player_song_name, title);
-//            notification.bigContentView.setTextViewText(R.id.player_author_name, summary);
-//            notification.flags |= Notification.FLAG_ONGOING_EVENT;
-//
-//            String coverPath = Const.COVER_PATH + File.separator + testMusic.musicId + ".jpg";
-//            Bitmap bitmap = ImageUtils.getBitmap(coverPath);
-//
-//            if (bitmap != null) {
-//                notification.contentView.setImageViewBitmap(R.id.player_album_art, bitmap);
-//                notification.bigContentView.setImageViewBitmap(R.id.player_album_art, bitmap);
-//            } else {
-//                requestAlbumCover(testMusic.coverImg, testMusic.musicId);
-//                notification.contentView.setImageViewResource(R.id.player_album_art, R.drawable.bg_album_default);
-//                notification.bigContentView.setImageViewResource(R.id.player_album_art, R.drawable.bg_album_default);
-//            }
-//
-//            startForeground(5, notification);
-//
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
     }
 
     override fun onDestroy() {
